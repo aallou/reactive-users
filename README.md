@@ -9,11 +9,15 @@ For this example, we use :
 ### How to test
 
 1- Run a redis server. 
-To deploy a redis instance, you can use a docker image (`docker run --name redis-users -p6379:6379 -it redis`)
+We will use docker to run an instance : 
+- create a docker network : `docker network create mynet`
+- deploy redis using a docker image : `docker run --name redis-users -p6379:6379 --net mynet -d redis`
 
 2- Run a spring application : 
 - using maven : `./mvnw spring-boot:run`
-- or build the project withmaven `./mvnw clean package` and launch the jar `java -jar target/reactive-users-0.0.1-SNAPSHOT.jar`
+- or build the project with maven `./mvnw clean package` and launch the jar `java -jar target/reactive-users-0.0.1-SNAPSHOT.jar`
+- or using docker : build the project with maven `./mvnw clean package` 
+and execute `docker run --name=reactive-users -p8080:8080 --net mynet -e redis-host="redis-users" aallou/reactive-users:0.0.1-SNAPSHOT`
 
 3- Call api (using httpie (https://github.com/jakubroztocil/httpie#json) with terminal)
 - Get all users : `http localhost:8080/users`
