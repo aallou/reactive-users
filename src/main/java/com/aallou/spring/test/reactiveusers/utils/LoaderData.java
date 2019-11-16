@@ -23,8 +23,8 @@ public class LoaderData {
     @PostConstruct
     public void loadData() {
         factory.getReactiveConnection().serverCommands().flushAll().thenMany(
-                Flux.just("Abdallah", "Abderrahmane", "Abdelhafid")
-                        .map(name -> new User(UUID.randomUUID().toString(), name, name + " last"))
+                Flux.range(1, 1000)
+                        .map(id -> new User(UUID.randomUUID().toString(), "User first name " + id, "User last name " + id))
                         .flatMap(user -> userOperations.opsForValue().set(user.getFirstName(), user)))
                 .thenMany(userOperations.keys("*")
                         .flatMap(userOperations.opsForValue()::get))
