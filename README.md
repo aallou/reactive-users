@@ -22,4 +22,5 @@ and execute `docker run --name=reactive-users -p8080:8080 --net mynet -e redis-h
 3- Call api (using httpie (https://github.com/jakubroztocil/httpie#json) with terminal)
 - Get all users : `http localhost:8080/users`
 - Get all users as a stream : `http :8080/users Accept:application/stream+json --stream`
+- Get all users using curl with limit (back pressure) : curl -H Accept:application/stream+json localhost:8080/users --limit-rate 1K (see https://curl.haxx.se/mail/archive-2004-02/0062.html)
 - Add a new user : `http -v localhost:8080/users firstName=Abdelhafid lastName=Allou`
